@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>SEED</title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+        <link href="assets/css/font-awesome.min.css" rel="stylesheet">
+        <link href="assets/css/main.css" rel="stylesheet">
+        <link href="assets/css/style.css" rel="stylesheet">
+        <link href="assets/css/chart.css" rel="stylesheet">
+        <link href="assets/css/dropdown.css" rel="stylesheet">
+        <link href="assets/css/bootstrap-tagsinput.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <!--
+        <nav id="nav" class="navbar navbar-dark navbar-fixed-top bg-inverse">
+            <a class="navbar-brand " href="#">SEED</a>
+        </nav>
+         
+        <div id="droparea" class="jumbotron droparea" ondrop="drop(event)" ondragover="allowDrop(event)">
+        </div> 
+        -->
+      			
+        <div id="content" class="container">    	
+	    	<!-- Input -->
+	    	<div class="input-group" ondrop="addSpan(event)" ondragover="allowDrop(event)" id="entity-search-form" style="width: 100%; margin: 5px">
+				<div id="inputBox" class="bootstrap-tagsinput">
+					<span id="attach" style="position: relative; display: inline-block; vertical-align: middle;min-width: 80px;">
+						<input type="text" name="entity" onkeydown="checkKey(event)" onfocus="closeAutoDis();getDropdown(this)">
+					</span>
+				</div>																
+				<div class="input-group-btn" style="height: 100% !important; width: 80px;">		    		 
+					<button id="explore" onclick="explore()"  class="btn btn-default btn-primary" type="submit" data-style="zoom-in" style="width: 100%; height: 100% !important; padding: 0px !important" >
+						Search
+					</button>
+				</div>
+			</div>	
+		
+            <!-- Result -->
+            <div id="resultGroup">
+            	
+            </div>       
+
+            
+            <!-- Footer
+            <hr>
+
+            <footer class="footer">
+                <div class="container">
+                    <p style="font-variant:small-caps;">SEED © 2016 </p>
+                </div>
+            </footer> -->
+        </div> <!-- /container -->
+
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src='assets/js/jquery.min.js'></script>
+        <script src='assets/js/bootstrap.min.js'></script>
+        <script src="assets/js/explore.js"></script>
+        <script src="assets/js/drag.js"></script>
+        <script src="assets/js/path.js"></script>
+        <script src="assets/js/fact.js"></script>
+        <script src="assets/js/span.js"></script>
+        <script src="assets/js/entityBox.js"></script>
+        <script src="assets/js/dropdown.js"></script>
+    </body>
+</html>

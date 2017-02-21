@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<conf>
+	<dir>/kb_data/instance_processed/</dir>
+	<model>TransJ</model>
+	<method>bern</method>
+	<D_entity>100</D_entity>
+	<D_relation>100</D_relation>
+	<output_size_entity>6</output_size_entity>
+	<output_size_feature>3</output_size_feature>
+</conf>

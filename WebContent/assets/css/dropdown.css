@@ -1,0 +1,26 @@
+.autoDis{
+	position:absolute;
+	width: 400px;
+	overflow-x:hidden;
+	font-size: 14px;
+	background-color:#fff;		
+	-webkit-background-clip:padding-box;
+	background-clip:padding-box;
+	border:1px solid #ccc;border:1px solid rgba(0,0,0,.15);
+	border-radius:4px;-webkit-box-shadow:0 6px 12px rgba(0,0,0,.175);
+	box-shadow:0 6px 12px rgba(0,0,0,.175)
+}
+.autoDis ul{
+	margin:0;
+	padding:0;
+}
+.autoDis li{
+	line-height:25px;
+	cursor:default;
+	padding:0 5px;
+	background-color:#fff;
+	list-style:none;}
+
+.autoDis .cur{
+	background:#ccc;
+}
