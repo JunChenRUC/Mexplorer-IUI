@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map.Entry;
-import java.util.concurrent.CountDownLatch;
+
+import org.apache.jasper.tagplugins.jstl.core.If;
 
 import cn.edu.ruc.Mexplore.data.DataManager;
 import cn.edu.ruc.Mexplore.domain.Entity;
@@ -51,7 +52,7 @@ public class Process {
 		for(Relation relation : getRelation(queryEntity)){
 			if(++ count > 4)
 				continue;
-			for(Entity targetEntity : rankEntity(getTarget(queryEntity, relation), DataManager.output_size_feature))
+			for(Entity targetEntity : rankEntity(getTarget(queryEntity, relation), relation.equals(dataManager.getEncodedRelation("subject")) ? 10 : DataManager.output_size_feature))
 				featureList.add(new Feature(relation, targetEntity, targetEntity.getScore() * relation.getScore()));
 		}
 		return featureList;
@@ -161,7 +162,7 @@ public class Process {
 				entity2distanceList.add(new Entity(DataManager.entity_type, entity2vectorEntry.getKey(), score));
 			}
 		
-			for(Entity target : rankEntity(entity2distanceList, DataManager.output_size_feature))
+			for(Entity target : rankEntity(entity2distanceList, relation.equals(dataManager.getEncodedRelation("subject")) ? 10 : DataManager.output_size_feature))
 				featureList.add(new Feature(relation, target, target.getScore() * relation.getScore()));
 		}
 		
@@ -219,13 +220,14 @@ public class Process {
 		
 		//get 1 hop path		
 		for(Relation relation : getRelation(head)){
+			int size = getTarget(head, relation).size();
 			for(Entity target : getTarget(head, relation)){
 				if(target.equals(tail)){
 					Path path = new Path();
 					path.setHead(head);
 					path.addRelation(relation);
 					path.addEntity(target);
-					path.setScore(target.getScore() * relation.getScore());
+					path.setScore(target.getScore() / Math.log(size));
 					pathList.add(path);
 				}
 			}
@@ -234,11 +236,13 @@ public class Process {
 		//get 2 hop path
 		if(pathList.size() < DataManager.output_size_feature){
 			for(Relation relation : getRelation(head)){
+				int size = getTarget(head, relation).size();
 				for(Entity target : getTarget(head, relation)){
 					if(target.equals(tail))
 						continue;
 					
 					for(Relation relation2 : getRelation(target)){
+						int size2 = getTarget(target, relation2).size();
 						for(Entity target2 : getTarget(target, relation2)){
 							if(target2.equals(tail)){
 								Path path = new Path();
@@ -247,7 +251,7 @@ public class Process {
 								path.addEntity(target);
 								path.addRelation(relation2);
 								path.addEntity(target2);
-								path.setScore(target.getScore() * relation.getScore() * target2.getScore() * relation2.getScore());
+								path.setScore(target.getScore() / Math.log(size) * target2.getScore() / Math.log(size2));
 								pathList.add(path);
 							}
 						}
@@ -259,16 +263,19 @@ public class Process {
 		//get 3 hop path
 		if(pathList.size() < DataManager.output_size_feature){
 			for(Relation relation : getRelation(head)){
+				int size = getTarget(head, relation).size();
 				for(Entity target : getTarget(head, relation)){
 					if(target.equals(tail))
 						continue;
 					
 					for(Relation relation2 : getRelation(target)){
+						int size2 = getTarget(target, relation2).size();
 						for(Entity target2 : getTarget(target, relation2)){
 							if(target2.equals(tail) || target2.equals(head))
 								continue;
 							
 							for(Relation relation3 : getRelation(target2)){
+								int size3 = getTarget(target2, relation3).size();
 								for(Entity target3 : getTarget(target2, relation3)){
 									if(target3.equals(tail)){
 										Path path = new Path();
@@ -279,7 +286,7 @@ public class Process {
 										path.addEntity(target2);
 										path.addRelation(relation3);
 										path.addEntity(target3);
-										path.setScore(target.getScore() * relation.getScore() * target2.getScore() * relation2.getScore() * target3.getScore() * relation3.getScore());
+										path.setScore(target.getScore() / Math.log(size) * target2.getScore() / Math.log(size2) * target3.getScore() / Math.log(size3));
 										pathList.add(path);
 									}
 								}
